@@ -1,5 +1,6 @@
 package stepDefinition;
 
+import cucumber.api.DataTable;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -9,10 +10,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.sql.Time;
-import java.util.concurrent.TimeUnit;
-
-import static java.util.concurrent.TimeUnit.*;
+import java.util.List;
 
 public class LoginStepDefinition {
 
@@ -32,18 +30,28 @@ public class LoginStepDefinition {
         Assert.assertEquals("Gmail",driver.getTitle());
     }
 
-    @Then("^User enters email id and click Next$")
-    public void user_enters_email_id_and_click_Next() throws InterruptedException {
-        driver.findElement(By.xpath("//input[@type='email']")).sendKeys("dummy@gmail.com");
+    @Then("^User enters email \"(.*)\" and click Next$")
+    public void user_enters_email_id_and_click_Next(String email) throws InterruptedException {
+        driver.findElement(By.xpath("//input[@type='email']")).sendKeys(email);
         Thread.sleep(2000);
         driver.findElement(By.xpath("//span[text()='Next']")).click();
         Thread.sleep(3000);
     }
+//// using data tables
+//    @Then("^User enters email and click Next$")
+//    public void user_enters_email_id_and_click_Next(DataTable emailid) throws InterruptedException {
+//        List<List<String>> data = emailid.raw();
+//        driver.findElement(By.xpath("//input[@type='email']")).sendKeys(data.get(0).get(0));
+//        Thread.sleep(2000);
+//        driver.findElement(By.xpath("//span[text()='Next']")).click();
+//        Thread.sleep(3000);
+//    }
 
-    @Then("^User enters password and click Next$")
-    public void user_enters_password_and_click_Next() throws InterruptedException {
-        driver.findElement(By.xpath("//input[@type='password']")).sendKeys("dummypwd");
+    @Then("^User enters password \"(.*)\" and click Next$")
+    public void user_enters_password_and_click_Next(String password) throws InterruptedException {
+        driver.findElement(By.xpath("//input[@type='password']")).sendKeys(password);
         driver.findElement(By.xpath("//span[text()='Next']")).click();
+        Thread.sleep(5000);
     }
 
     @Then("^User is gmail inbox page$")
